@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:layout_margin="20dp">
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/flightno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status flight KL1234"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_margin="10dp"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/from_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Status flight KL1234"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="Arrival Date" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="Arrival Time" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/arrival_date_value"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="--" />
+
+            <TextView
+                android:id="@+id/arrival_time_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="--" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="Total time travel" />
+
+            <TextView
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:text="Button" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="--" />
+
+            <Button
+                android:id="@+id/flighttime"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:text="Arrived" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="Operated by" />
+
+            <TextView
+                android:id="@+id/operated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:text="--" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!-- <TextView
+         android:id="@+id/arrival_date_value"
+         android:layout_width="97dp"
+         android:layout_height="21dp"
+         android:layout_marginStart="44dp"
+         android:layout_marginTop="40dp"
+         android:text="&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/arrival_date" />
+
+     <TextView
+         android:id="@+id/arrival_date"
+         android:layout_width="102dp"
+         android:layout_height="26dp"
+         android:layout_marginTop="56dp"
+         android:text="Arrival date"
+         app:layout_constraintEnd_toStartOf="@+id/arrival_time"
+         app:layout_constraintHorizontal_bias="0.353"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/from_to" />
+
+     <TextView
+         android:id="@+id/arrival_time"
+         android:layout_width="81dp"
+         android:layout_height="26dp"
+         android:layout_marginTop="188dp"
+         android:layout_marginEnd="112dp"
+         android:text="Arrival Time"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+
+     <TextView
+         android:id="@+id/total_travel_time"
+         android:layout_width="99dp"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="44dp"
+         android:layout_marginTop="40dp"
+         android:text="Total travel time:"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/arrival_date_value" />
+
+     <TextView
+         android:id="@+id/total_travel_time_value"
+         android:layout_width="64dp"
+         android:layout_height="17dp"
+         android:layout_marginTop="28dp"
+         android:text="&#45;&#45;"
+         app:layout_constraintEnd_toStartOf="@+id/flighttime"
+         app:layout_constraintHorizontal_bias="0.285"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/total_travel_time" />
+
+     <Button
+         android:id="@+id/flighttime"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="384dp"
+         android:background="@color/colorPrimary"
+         android:text="On Time"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.416"
+         app:layout_constraintStart_toEndOf="@+id/total_travel_time" />
+
+     <TextView
+         android:id="@+id/textView9"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="48dp"
+         android:text="Operated by"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.131"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/total_travel_time_value" />
+
+     <TextView
+         android:id="@+id/operated"
+         android:layout_width="290dp"
+         android:layout_height="26dp"
+         android:layout_marginTop="24dp"
+         android:text="-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.363"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+     <TextView
+         android:id="@+id/arrival_time_value"
+         android:layout_width="82dp"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="35dp"
+         android:text="-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.438"
+         app:layout_constraintStart_toEndOf="@+id/arrival_date_value"
+         app:layout_constraintTop_toBottomOf="@+id/arrival_time"
+         app:layout_constraintVertical_bias="0.0" />-->
+
+</RelativeLayout>
