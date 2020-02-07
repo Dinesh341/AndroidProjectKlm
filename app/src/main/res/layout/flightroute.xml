@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="38dp"
             android:ems="10"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="@string/departing_from"
             android:inputType="textPersonName" />
 
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
+            android:backgroundTint="@color/colorPrimary"
             android:ems="10"
             android:hint="@string/arriving_at"
             android:inputType="textPersonName" />
@@ -36,7 +38,8 @@
             android:layout_width="230dp"
             android:layout_height="49dp"
             android:layout_gravity="center"
-
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimary"
             android:layout_marginTop="48dp"
             android:text="@string/start_date" />
 
@@ -44,6 +47,8 @@
             android:id="@+id/end_date"
             android:layout_width="230dp"
             android:layout_height="49dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
             android:layout_gravity="center"
             android:layout_marginTop="48dp"
             android:text="@string/end_date" />
@@ -52,6 +57,8 @@
             android:id="@+id/searchroute"
             android:layout_width="230dp"
             android:layout_height="49dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
             android:layout_gravity="center"
             android:layout_marginTop="48dp"
             android:text="@string/search_route" />

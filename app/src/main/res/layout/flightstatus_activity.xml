@@ -18,6 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.608"
         app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.426" />
 
@@ -29,6 +30,8 @@
         android:text="Search Flight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -40,7 +43,9 @@
         android:text="Select Date"
         app:layout_constraintBottom_toTopOf="@+id/searchflight"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@android:color/white"
         app:layout_constraintHorizontal_bias="0.497"
+        android:background="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flightno"
         app:layout_constraintVertical_bias="0.457" />

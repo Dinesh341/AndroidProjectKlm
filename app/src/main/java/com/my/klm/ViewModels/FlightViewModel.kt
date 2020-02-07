@@ -1,23 +1,19 @@
 package com.klm.ViewModels
 
 
+import DestinationRouteBase
 import FlightStatusData
 import TokenData
-import android.content.Intent
 import android.view.View
 import android.widget.ProgressBar
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.JsonObject
 import com.klm.networkservice.RetrofitService
-import com.my.klm.FlightDetailView
 import com.my.klm.model.route.FlightRouteBase
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.flightstatus_activity.*
 
 class FlightViewModel : ViewModel() {
 
@@ -26,10 +22,13 @@ class FlightViewModel : ViewModel() {
     private var flightdata: MutableLiveData<FlightStatusData> = MutableLiveData()
     private var routeflightdata: MutableLiveData<FlightRouteBase> = MutableLiveData()
     private var tokenData: MutableLiveData<TokenData> = MutableLiveData()
+    private var destinationData: MutableLiveData<DestinationRouteBase> = MutableLiveData()
+
 
 
     fun getFlightData(): MutableLiveData<FlightStatusData>? = flightdata
     fun getRouteFlightData(): MutableLiveData<FlightRouteBase>? = routeflightdata
+    fun getDestinationData(): MutableLiveData<DestinationRouteBase>? = destinationData
     fun getTokenValue(): MutableLiveData<TokenData>? = tokenData
     val tokenBody: String = "client_credentials"
 
@@ -47,6 +46,26 @@ class FlightViewModel : ViewModel() {
             .subscribe({ result ->
                 result?.let {
                     flightdata.value = result
+                }
+            }, { error ->
+                progress_circular.visibility = View.GONE
+                error.printStackTrace()
+            }
+            )
+        compositeDisposable.add(disposable)
+    }
+
+    fun getDestinationData(
+        progress_circular: ProgressBar,
+        cities: String,
+        token: String
+    ) {
+        val disposable = RetrofitService.create().getDestinationData(cities, token)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result ->
+                result?.let {
+                    destinationData.value = result
                 }
             }, { error ->
                 progress_circular.visibility = View.GONE

@@ -27,6 +27,8 @@ class FlightRouteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.flightroute)
+        setTitle(R.string.flight_route)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         mAndroidViewModel =
             ViewModelProviders.of(this@FlightRouteActivity).get(FlightViewModel::class.java)
         searchroute.setOnClickListener {

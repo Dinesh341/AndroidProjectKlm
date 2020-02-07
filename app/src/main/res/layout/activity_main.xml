@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -19,22 +20,54 @@
 
     <Button
         android:id="@+id/flight_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Flight Status"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:textColor="@android:color/white"
+        android:text="@string/flight_status"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/flight_route"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Flight Route"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:textColor="@android:color/white"
+        android:text="@string/flight_route"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flight_status" />
+        app:layout_constraintTop_toBottomOf="@+id/flight_status"
+        app:layout_constraintVertical_bias="0.468" />
+
+    <Button
+        android:id="@+id/destination_suggestion"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:text="@string/destination_suggestions"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flight_status"
+        app:layout_constraintVertical_bias="0.319" />
+
+    <Button
+        android:id="@+id/wether_information"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/weather_information"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flight_status"
+        app:layout_constraintVertical_bias="0.541" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

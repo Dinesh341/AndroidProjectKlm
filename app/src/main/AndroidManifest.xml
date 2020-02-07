@@ -14,23 +14,30 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         <activity
             android:name=".FlightStatusActivity"
-            android:label="@string/app_name"/>
+            />
         <activity
             android:name=".FlightDetailView"
-            android:label="@string/app_name"/>
+            />
         <activity
             android:name=".flightroute.FlightRouteActivity"
-            android:label="@string/app_name"/>
+            />
         <activity
             android:name=".flightroute.FlightRouteList"
-            android:label="@string/app_name"/>
-    </application>
+           />
+        <activity
+            android:name=".destinationroute.DestinationRouteActivity"
+            />
+        <activity
+            android:name=".destinationroute.DestinationRouteList"
+            />
+
+         </application>
 
 
 </manifest>

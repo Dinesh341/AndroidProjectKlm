@@ -1,14 +1,13 @@
 package com.my.klm
 
 import FlightStatusData
-import android.app.Application
 import android.app.DatePickerDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.klm.ViewModels.FlightViewModel
@@ -16,6 +15,7 @@ import com.my.klm.Utils.PrefUtils
 import kotlinx.android.synthetic.main.flightstatus_activity.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class FlightStatusActivity : AppCompatActivity() {
     private var mAndroidViewModel: FlightViewModel? = null
@@ -25,6 +25,8 @@ class FlightStatusActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.flightstatus_activity)
+        setTitle(R.string.flight_status)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         mAndroidViewModel =
             ViewModelProviders.of(this@FlightStatusActivity).get(FlightViewModel::class.java)
         searchflight.setOnClickListener {
@@ -48,9 +50,12 @@ class FlightStatusActivity : AppCompatActivity() {
             }
 
         })
-
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
     /**
      * Get the Flight details based on the flight number and Date
      */

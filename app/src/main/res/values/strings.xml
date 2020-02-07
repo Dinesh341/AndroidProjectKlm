@@ -1,12 +1,14 @@
 <resources>
-    <string name="app_name">KLM</string>
+    <string name="app_name">KLM APP</string>
     <string name="error_date">Please select the date</string>
     <string name="error_flight">Please enter the valid flight number</string>
     <string name="error_departing">Please enter the Departing</string>
     <string name="error_arriving">Please enter the Arriving</string>
+    <string name="error_cities">Please enter the Cities</string>
     <string name="under_dev">Under Development</string>
     <string name="flightdata">flightdata</string>
     <string name="flightroutedata">flightroutedata</string>
+    <string name="destinationroutedata">destinationroutedata</string>
     <string name="token">token</string>
     <string name="select_date">Select Date</string>
     <string name="status_flight">Status flight KL</string>
@@ -17,4 +19,10 @@
     <string name="end_date">End Date</string>
     <string name="search_route">Search Route</string>
     <string name="flight_route_data">flightRouteData</string>
-   </resources>
+    <string name="flight_status">Flight Status</string>
+    <string name="flight_route">Flight Route</string>
+    <string name="destination_suggestions">Destination Suggestion</string>
+    <string name="weather_information">Weather Information</string>
+    <string name="cities_hint">Cities, eg.AMS,CDG </string>
+    <string name="search_destination">Search Destination</string>
+</resources>
