@@ -1,41 +1,37 @@
 package com.klm.ViewModels
 
 
-import DestinationDetatilBase
-import DestinationRouteBase
-import FlightStatusData
-import TokenData
+import com.my.klm.model.destinationdetail.DestinationDetatilBase
+import com.my.klm.model.destination.DestinationRouteBase
+import com.my.klm.model.FlightStatusData
+import com.my.klm.model.token.TokenData
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.klm.networkservice.RetrofitService
 import com.my.klm.model.route.FlightRouteBase
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
+
 class FlightViewModel : ViewModel() {
 
+    private val TAG: String = FlightViewModel::class.java.getSimpleName()
     private val compositeDisposable = CompositeDisposable()
-
     private var flightdata: MutableLiveData<FlightStatusData> = MutableLiveData()
     private var routeflightdata: MutableLiveData<FlightRouteBase> = MutableLiveData()
     private var tokenData: MutableLiveData<TokenData> = MutableLiveData()
     private var destinationData: MutableLiveData<DestinationRouteBase> = MutableLiveData()
     private var destinationDetailData: MutableLiveData<DestinationDetatilBase> = MutableLiveData()
-
-
-
-
     fun getFlightData(): MutableLiveData<FlightStatusData>? = flightdata
     fun getRouteFlightData(): MutableLiveData<FlightRouteBase>? = routeflightdata
     fun getDestinationData(): MutableLiveData<DestinationRouteBase>? = destinationData
     fun getDestinationDetatilData(): MutableLiveData<DestinationDetatilBase>? = destinationDetailData
     fun getTokenValue(): MutableLiveData<TokenData>? = tokenData
     val tokenBody: String = "client_credentials"
-
 
     fun getFlightList(
         progress_circular: ProgressBar,
@@ -48,12 +44,10 @@ class FlightViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
-                result?.let {
-                    flightdata.value = result
-                }
+                flightdata.value = result
             }, { error ->
                 progress_circular.visibility = View.GONE
-                error.printStackTrace()
+                Log.e(TAG,error.message)
             }
             )
         compositeDisposable.add(disposable)
@@ -68,12 +62,10 @@ class FlightViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
-                result?.let {
-                    destinationData.value = result
-                }
+                destinationData.value = result
             }, { error ->
                 progress_circular.visibility = View.GONE
-                error.printStackTrace()
+                Log.e(TAG,error.message)
             }
             )
         compositeDisposable.add(disposable)
@@ -88,12 +80,10 @@ class FlightViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
-                result?.let {
-                    destinationDetailData.value = result
-                }
+                destinationDetailData.value = result
             }, { error ->
                 progress_circular.visibility = View.GONE
-                error.printStackTrace()
+                Log.e(TAG,error.message)
             }
             )
         compositeDisposable.add(disposable)
@@ -111,12 +101,10 @@ class FlightViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
-                result?.let {
-                    routeflightdata.value = result
-                }
+                routeflightdata.value = result
             }, { error ->
                 progress_circular.visibility = View.GONE
-                error.printStackTrace()
+                Log.e(TAG,error.message)
             }
             )
         compositeDisposable.add(disposable)
@@ -126,11 +114,9 @@ class FlightViewModel : ViewModel() {
         val disposable = RetrofitService.create().getToken(tokenBody).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
-                result?.let {
-                    tokenData.value = result
-                }
+                tokenData.value = result
             }, { error ->
-                error.printStackTrace()
+                Log.e(TAG,error.message)
             }
             )
         compositeDisposable.add(disposable)

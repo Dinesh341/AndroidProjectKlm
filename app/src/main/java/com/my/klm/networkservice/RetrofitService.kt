@@ -12,10 +12,8 @@ import java.util.concurrent.TimeUnit
 
 class RetrofitService {
 
-
     companion object Factory {
-       // var gson = GsonBuilder().setLenient().create()
-        val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create()
+        var gson = GsonBuilder().setLenient().create()
 
         fun create(): ApiInterface {
             val retrofit = Retrofit.Builder()
@@ -35,7 +33,6 @@ class RetrofitService {
             }
         }
 
-
         private val okHttpClient = OkHttpClient.Builder()
             .addNetworkInterceptor(interceptor) // same for .addInterceptor(...)
             .connectTimeout(30, TimeUnit.SECONDS) //Backend is really slow
@@ -44,6 +41,5 @@ class RetrofitService {
             .build()
 
     }
-
 
 }

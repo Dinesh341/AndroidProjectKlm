@@ -1,6 +1,6 @@
 package com.my.klm
 
-import FlightStatusData
+import com.my.klm.model.FlightStatusData
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.my.klm.model.route.OperationalFlights
@@ -12,7 +12,9 @@ class FlightDetailView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.flightstatus)
         setTitle(R.string.flight_detail)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar.let {
+
+        }
         val flightData = intent.getParcelableExtra<FlightStatusData>(getString(R.string.flightdata))
         val flightRouteData = intent.getParcelableExtra<OperationalFlights>(getString(R.string.flight_route_data))
         flightRouteData?.let {

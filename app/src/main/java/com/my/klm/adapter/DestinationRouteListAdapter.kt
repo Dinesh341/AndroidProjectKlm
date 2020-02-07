@@ -1,7 +1,6 @@
 package com.adapter
 
-import DestinationRouteBase
-import android.content.Context
+import com.my.klm.model.destination.DestinationRouteBase
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.my.klm.R
 import com.squareup.picasso.Picasso
 
-class DestinationRouteListAdapter(private val context: Context, private val routeList: DestinationRouteBase) :
+class DestinationRouteListAdapter(private val routeList: DestinationRouteBase) :
 
     RecyclerView.Adapter<DestinationRouteListAdapter.MovieViewHolder>() {
 
@@ -29,12 +28,12 @@ class DestinationRouteListAdapter(private val context: Context, private val rout
             try {
                 val routeData = routeList.airports[position]
                 holder.routeLabel.text = routeData.airportLabel
-                holder.routeTitle.text = routeList?.destinations[position]?.title
-                holder.reginalLabel.text = routeList?.regions[position]?.regionLabel
-                holder.countryLabel.text = routeList?.countries[position]?.countryLabel
-                val url = routeList?.destinations[position]?.picture.imageUrl
-                url?.let {
-                    Picasso.get().load(url.toString())
+                holder.routeTitle.text = routeList.destinations[position].title
+                holder.reginalLabel.text = routeList.regions[position].regionLabel
+                holder.countryLabel.text = routeList.countries[position].countryLabel
+                val url = routeList.destinations[position].picture.imageUrl
+                url.let {
+                    Picasso.get().load(url)
                         .placeholder(R.drawable.ic_launcher_background)
                         .error(R.drawable.ic_launcher_background).into(holder.weatherImage)
                 }

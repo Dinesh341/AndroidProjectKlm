@@ -176,7 +176,7 @@
          android:layout_height="26dp"
          android:layout_marginTop="188dp"
          android:layout_marginEnd="112dp"
-         android:text="Arrival Time"
+         android:text="Arrival com.my.klm.model.destinationdetail.Time"
          app:layout_constraintEnd_toEndOf="parent"
          app:layout_constraintTop_toTopOf="parent" />
 
@@ -207,7 +207,7 @@
          android:layout_height="wrap_content"
          android:layout_marginBottom="384dp"
          android:background="@color/colorPrimary"
-         android:text="On Time"
+         android:text="On com.my.klm.model.destinationdetail.Time"
          app:layout_constraintBottom_toBottomOf="parent"
          app:layout_constraintEnd_toEndOf="parent"
          app:layout_constraintHorizontal_bias="0.416"

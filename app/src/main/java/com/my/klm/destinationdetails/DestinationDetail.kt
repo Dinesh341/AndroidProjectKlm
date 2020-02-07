@@ -1,7 +1,6 @@
 package com.my.klm.destinationdetails
 
-import DestinationDetatilBase
-import DestinationRouteBase
+import com.my.klm.model.destinationdetail.DestinationDetatilBase
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -14,16 +13,11 @@ import com.klm.ViewModels.FlightViewModel
 import com.my.klm.R
 import com.my.klm.Utils.PrefUtils
 import kotlinx.android.synthetic.main.destinationdetatil.*
-import kotlinx.android.synthetic.main.destinationroute.*
-import kotlinx.android.synthetic.main.destinationroute.search_destination
 import kotlinx.android.synthetic.main.flightroute.progress_bar
-import java.util.*
 
 
 class DestinationDetail : AppCompatActivity() {
     private var mAndroidViewModel: FlightViewModel? = null
-    private var isStartDate: Boolean = false
-    var cal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,10 +76,8 @@ class DestinationDetail : AppCompatActivity() {
          */
         private fun initObservers() {
             mAndroidViewModel?.getDestinationDetatilData()?.observe(this, Observer {
-                it?.let {
                     progress_bar.visibility = View.GONE
                     sendData(it)
-                }
             })
         }
 

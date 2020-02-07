@@ -1,9 +1,9 @@
 package com.assignment.kotlinmvvm.interfaces
 
-import DestinationDetatilBase
-import DestinationRouteBase
-import FlightStatusData
-import TokenData
+import com.my.klm.model.destinationdetail.DestinationDetatilBase
+import com.my.klm.model.destination.DestinationRouteBase
+import com.my.klm.model.FlightStatusData
+import com.my.klm.model.token.TokenData
 import com.my.klm.model.route.FlightRouteBase
 import io.reactivex.Observable
 import retrofit2.http.*

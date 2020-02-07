@@ -1,16 +1,14 @@
 package com.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.my.klm.R
 import com.my.klm.flightroute.FlightRouteList
-import com.my.klm.model.route.FlightLegs
-import com.my.klm.model.route.FlightRouteBase
 import com.my.klm.model.route.OperationalFlights
 
 class FlightRouteListAdapter(private val context: Context, private val routeList: List<OperationalFlights>) :
@@ -36,7 +34,6 @@ class FlightRouteListAdapter(private val context: Context, private val routeList
             holder.routeDate.text = routeData.flightScheduleDate
             holder.flightNumber.text = "KL"+routeData.flightNumber.toString()
             holder.flightStatus.text = routeData.flightStatusPublic
-
             holder.itemView.setOnClickListener {
                 FlightRouteList.startActivity(context, routeData)
             }

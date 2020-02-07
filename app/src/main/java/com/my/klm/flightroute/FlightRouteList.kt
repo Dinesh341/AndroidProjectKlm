@@ -1,22 +1,16 @@
 package com.my.klm.flightroute
 
-import FlightStatusData
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adapter.FlightRouteListAdapter
-import com.klm.ViewModels.FlightViewModel
 import com.my.klm.FlightDetailView
-import com.my.klm.FlightStatusActivity
 import com.my.klm.R
 import com.my.klm.model.route.FlightRouteBase
 import com.my.klm.model.route.OperationalFlights
-
 import kotlinx.android.synthetic.main.flightroutelist.*
 
 

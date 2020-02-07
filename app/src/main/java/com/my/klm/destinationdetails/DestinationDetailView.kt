@@ -1,14 +1,11 @@
 package com.my.klm.destinationdetails
 
-import DestinationDetatilBase
-import FlightStatusData
+import com.my.klm.model.destinationdetail.DestinationDetatilBase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.my.klm.R
-import com.my.klm.model.route.OperationalFlights
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.destinationdetailview.*
-import kotlinx.android.synthetic.main.flightstatus.*
 
 class DestinationDetailView : AppCompatActivity() {
 
@@ -20,23 +17,21 @@ class DestinationDetailView : AppCompatActivity() {
         val destinationDetailData =
             intent.getParcelableExtra<DestinationDetatilBase>(getString(R.string.destinationdetaildata))
         destinationDetailData?.let {
-            weather_label.setText(destinationDetailData.weather.data.description.label)
-            weather_description.setText(destinationDetailData.weather.data.description.description)
-            temp_value.setText(
-                destinationDetailData.weather.data?.temperature[0]?.value.toString() + getString(
-                    R.string.degree_symbol
-                ) + " " + destinationDetailData.weather.data?.temperature[0]?.unit.toString()
-            )
-            currency_value.setText(destinationDetailData.currency.data.label)
-            spoken_lang_values.setText(destinationDetailData?.spokenLanguages[0]?.label)
-            var url = destinationDetailData.weather.data.description.pictoUrl
-            url?.let {
-                Picasso.get().load(url.toString())
+            weather_label.text = destinationDetailData.weather.data.description.label
+            weather_description.text = destinationDetailData.weather.data.description.description
+            temp_value.text = destinationDetailData.weather.data.temperature[0].value.toString() + getString(
+                R.string.degree_symbol
+            ) + " " + destinationDetailData.weather.data.temperature[0].unit
+            currency_value.text = destinationDetailData.currency.data.label
+            spoken_lang_values.text = destinationDetailData.spokenLanguages[0].label
+            val url = destinationDetailData.weather.data.description.pictoUrl
+            url.let {
+                Picasso.get().load(url)
                     .placeholder(R.drawable.ic_launcher_background)
                     .error(R.drawable.ic_launcher_background).into(weatherimg)
             }
-            orgincitycode.setText(destinationDetailData.originCity.code)
-            orgincitylabel.setText(destinationDetailData.originCity.label)
+            orgincitycode.text = destinationDetailData.originCity.code
+            orgincitylabel.text = destinationDetailData.originCity.label
         }
     }
 

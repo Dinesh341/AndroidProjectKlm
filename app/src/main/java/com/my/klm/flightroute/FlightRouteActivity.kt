@@ -4,12 +4,10 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-
 import com.klm.ViewModels.FlightViewModel
 import com.my.klm.R
 import com.my.klm.Utils.PrefUtils
@@ -17,7 +15,6 @@ import com.my.klm.model.route.FlightRouteBase
 import kotlinx.android.synthetic.main.flightroute.*
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class FlightRouteActivity : AppCompatActivity() {
     private var mAndroidViewModel: FlightViewModel? = null
@@ -40,12 +37,12 @@ class FlightRouteActivity : AppCompatActivity() {
         }
         initTokenObservers()
         start_date.setOnClickListener {
-            isStartDate = true;
-            datePicker();
+            isStartDate = true
+            datePicker()
         }
         end_date.setOnClickListener {
-            isStartDate = false;
-            datePicker();
+            isStartDate = false
+            datePicker()
         }
     }
 
@@ -55,12 +52,12 @@ class FlightRouteActivity : AppCompatActivity() {
     private fun searchFlightNumber() {
         var tokenValue = PrefUtils.getStringPreference(this, getString(R.string.token))
         tokenValue = "Bearer " + tokenValue
-        var departingFrom = departing_from.text.toString()
-        var arrivingAt = arriving_at.text.toString()
+        val departingFrom = departing_from.text.toString()
+        val arrivingAt = arriving_at.text.toString()
         if (!departingFrom.isEmpty() && !arrivingAt.isEmpty()) {
             if(!PrefUtils.validateFromToDate(start_date.text.toString()) && !PrefUtils.validateFromToDate(end_date.text.toString())) {
-                var startDate = "${start_date.text}T10:00:00Z"
-                var endDate = "${end_date.text}T19:00:00Z"
+                val startDate = "${start_date.text}T10:00:00Z"
+                val endDate = "${end_date.text}T19:00:00Z"
                 progress_bar.visibility = View.VISIBLE
                 mAndroidViewModel?.getAllRouteFlightList(
                     progress_bar,
@@ -95,7 +92,7 @@ class FlightRouteActivity : AppCompatActivity() {
     }
 
     // create an OnDateSetListener
-    val dateSetListener =
+    private val dateSetListener =
         DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, monthOfYear)
@@ -107,9 +104,9 @@ class FlightRouteActivity : AppCompatActivity() {
         val myFormat = "yyyy-MM-dd" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         if(isStartDate) {
-            start_date!!.text = sdf.format(cal.getTime())
+            start_date!!.text = sdf.format(cal.time)
         }else{
-            end_date!!.text = sdf.format(cal.getTime())
+            end_date!!.text = sdf.format(cal.time)
         }
     }
 

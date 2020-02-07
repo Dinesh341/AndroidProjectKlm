@@ -1,6 +1,6 @@
 package com.my.klm.destinationroute
 
-import DestinationRouteBase
+import com.my.klm.model.destination.DestinationRouteBase
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -14,13 +14,10 @@ import com.my.klm.R
 import com.my.klm.Utils.PrefUtils
 import kotlinx.android.synthetic.main.destinationroute.*
 import kotlinx.android.synthetic.main.flightroute.progress_bar
-import java.util.*
 
 
 class DestinationRouteActivity : AppCompatActivity() {
     private var mAndroidViewModel: FlightViewModel? = null
-    private var isStartDate: Boolean = false
-    var cal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

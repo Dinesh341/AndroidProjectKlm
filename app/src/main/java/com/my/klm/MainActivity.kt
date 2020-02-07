@@ -1,9 +1,8 @@
 package com.my.klm
 
-import TokenData
+import com.my.klm.model.token.TokenData
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -47,9 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initTokenObservers() {
         mAndroidViewModel?.getTokenValue()?.observe(this, Observer {
-            it?.let {
-                getToken(it)
-            }
+             getToken(it)
         })
     }
 
