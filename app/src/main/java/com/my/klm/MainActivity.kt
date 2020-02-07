@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.klm.ViewModels.FlightViewModel
 import com.my.klm.Utils.PrefUtils
+import com.my.klm.destinationdetails.DestinationDetail
 import com.my.klm.destinationroute.DestinationRouteActivity
 import com.my.klm.flightroute.FlightRouteActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,6 +32,10 @@ class MainActivity : AppCompatActivity() {
         }
         destination_suggestion.setOnClickListener {
             intent = Intent(this, DestinationRouteActivity::class.java)
+            startActivity(intent)
+        }
+        wether_information.setOnClickListener {
+            intent = Intent(this, DestinationDetail::class.java)
             startActivity(intent)
         }
         mAndroidViewModel =

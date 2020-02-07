@@ -147,4 +147,9 @@ class FlightRouteActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
 }

@@ -5,10 +5,12 @@
     <string name="error_departing">Please enter the Departing</string>
     <string name="error_arriving">Please enter the Arriving</string>
     <string name="error_cities">Please enter the Cities</string>
+    <string name="error_origin">Please enter the Origin</string>
     <string name="under_dev">Under Development</string>
     <string name="flightdata">flightdata</string>
     <string name="flightroutedata">flightroutedata</string>
     <string name="destinationroutedata">destinationroutedata</string>
+    <string name="destinationdetaildata">destinationdetaildata</string>
     <string name="token">token</string>
     <string name="select_date">Select Date</string>
     <string name="status_flight">Status flight KL</string>
@@ -25,4 +27,9 @@
     <string name="weather_information">Weather Information</string>
     <string name="cities_hint">Cities, eg.AMS,CDG </string>
     <string name="search_destination">Search Destination</string>
+    <string name="destination_detail">Destination Details</string>
+    <string name="destination_hint">AMS</string>
+    <string name="degree_symbol">"\u00B0"</string>
+    <string name="route_list">Route List</string>
+    <string name="flight_detail">Flight Details</string>
 </resources>

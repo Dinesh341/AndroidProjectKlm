@@ -11,6 +11,8 @@ class FlightDetailView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.flightstatus)
+        setTitle(R.string.flight_detail)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val flightData = intent.getParcelableExtra<FlightStatusData>(getString(R.string.flightdata))
         val flightRouteData = intent.getParcelableExtra<OperationalFlights>(getString(R.string.flight_route_data))
         flightRouteData?.let {
@@ -31,5 +33,10 @@ class FlightDetailView : AppCompatActivity() {
             from_to.setText(flightData.flightLegs?.get(0)?.departureInformation?.airport?.city?.name+" - "+ flightData.flightLegs?.get(0)?.arrivalInformation?.airport?.city?.name)
         }
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

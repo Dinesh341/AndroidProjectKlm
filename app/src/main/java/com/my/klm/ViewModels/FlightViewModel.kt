@@ -1,6 +1,7 @@
 package com.klm.ViewModels
 
 
+import DestinationDetatilBase
 import DestinationRouteBase
 import FlightStatusData
 import TokenData
@@ -23,12 +24,15 @@ class FlightViewModel : ViewModel() {
     private var routeflightdata: MutableLiveData<FlightRouteBase> = MutableLiveData()
     private var tokenData: MutableLiveData<TokenData> = MutableLiveData()
     private var destinationData: MutableLiveData<DestinationRouteBase> = MutableLiveData()
+    private var destinationDetailData: MutableLiveData<DestinationDetatilBase> = MutableLiveData()
+
 
 
 
     fun getFlightData(): MutableLiveData<FlightStatusData>? = flightdata
     fun getRouteFlightData(): MutableLiveData<FlightRouteBase>? = routeflightdata
     fun getDestinationData(): MutableLiveData<DestinationRouteBase>? = destinationData
+    fun getDestinationDetatilData(): MutableLiveData<DestinationDetatilBase>? = destinationDetailData
     fun getTokenValue(): MutableLiveData<TokenData>? = tokenData
     val tokenBody: String = "client_credentials"
 
@@ -66,6 +70,26 @@ class FlightViewModel : ViewModel() {
             .subscribe({ result ->
                 result?.let {
                     destinationData.value = result
+                }
+            }, { error ->
+                progress_circular.visibility = View.GONE
+                error.printStackTrace()
+            }
+            )
+        compositeDisposable.add(disposable)
+    }
+
+    fun getDestinationDetailData(
+        progress_circular: ProgressBar,
+        cities: String,
+        token: String
+    ) {
+        val disposable = RetrofitService.create().getDestinationDetail(cities, token)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result ->
+                result?.let {
+                    destinationDetailData.value = result
                 }
             }, { error ->
                 progress_circular.visibility = View.GONE

@@ -1,5 +1,6 @@
 package com.assignment.kotlinmvvm.interfaces
 
+import DestinationDetatilBase
 import DestinationRouteBase
 import FlightStatusData
 import TokenData
@@ -31,5 +32,11 @@ interface ApiInterface {
     @GET("/travel/inspire/destinations")
     fun getDestinationData(@Query("cities") cities: String,
                         @Header("Authorization") auth: String ) : Observable<DestinationRouteBase>
+
+    @Headers(
+        "Accept-Language: en-EN","AFKL-Travel-Market: NL","AFKL-TRAVEL-Host: KL","Accept: application/hal+json;charset=UTF-8")
+    @GET("/travel/inspire/destinations/JFK/practicalinformation")
+    fun getDestinationDetail(@Query("origin") origin: String,
+                           @Header("Authorization") auth: String ) : Observable<DestinationDetatilBase>
 
 }

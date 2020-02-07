@@ -24,28 +24,26 @@ import kotlinx.android.synthetic.main.flightroutelist.*
 
 class DestinationRouteList : AppCompatActivity() {
 
-    companion object {
-        fun startActivity(context: Context, flightRouteBase: OperationalFlights) {
-            val intent = Intent(context, FlightDetailView::class.java)
-            intent.putExtra("flightRouteData", flightRouteBase)
-            context.startActivity(intent)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.destinationroutelist)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setTitle(R.string.destination_suggestions)
-        val flightRouteData = intent.getParcelableExtra<DestinationRouteBase>(getString(R.string.destinationroutedata))
+        val flightRouteData =
+            intent.getParcelableExtra<DestinationRouteBase>(getString(R.string.destinationroutedata))
         flightRouteData?.let { setAdapter(it) }
     }
 
-    private fun setAdapter(operationalFlights : DestinationRouteBase) {
+    private fun setAdapter(operationalFlights: DestinationRouteBase) {
         val adapter = DestinationRouteListAdapter(this, operationalFlights)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView!!.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
         recyclerView.adapter = adapter
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 }

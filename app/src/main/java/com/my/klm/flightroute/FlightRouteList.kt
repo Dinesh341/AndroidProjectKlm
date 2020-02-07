@@ -33,6 +33,8 @@ class FlightRouteList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.flightroutelist)
+        setTitle(R.string.route_list)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val flightRouteData = intent.getParcelableExtra<FlightRouteBase>(getString(R.string.flightroutedata))
         flightRouteData.operationalFlights?.let { setAdapter(it) }
     }
@@ -42,6 +44,11 @@ class FlightRouteList : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView!!.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
         recyclerView.adapter = adapter
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 }

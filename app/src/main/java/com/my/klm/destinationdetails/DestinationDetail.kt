@@ -1,5 +1,6 @@
-package com.my.klm.destinationroute
+package com.my.klm.destinationdetails
 
+import DestinationDetatilBase
 import DestinationRouteBase
 import android.content.Intent
 import android.os.Bundle
@@ -12,26 +13,28 @@ import androidx.lifecycle.ViewModelProviders
 import com.klm.ViewModels.FlightViewModel
 import com.my.klm.R
 import com.my.klm.Utils.PrefUtils
+import kotlinx.android.synthetic.main.destinationdetatil.*
 import kotlinx.android.synthetic.main.destinationroute.*
+import kotlinx.android.synthetic.main.destinationroute.search_destination
 import kotlinx.android.synthetic.main.flightroute.progress_bar
 import java.util.*
 
 
-class DestinationRouteActivity : AppCompatActivity() {
+class DestinationDetail : AppCompatActivity() {
     private var mAndroidViewModel: FlightViewModel? = null
     private var isStartDate: Boolean = false
     var cal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.destinationroute)
-        setTitle(R.string.destination_suggestions)
+        setContentView(R.layout.destinationdetatil)
+        setTitle(R.string.weather_information)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         mAndroidViewModel =
-            ViewModelProviders.of(this@DestinationRouteActivity).get(FlightViewModel::class.java)
-        search_destination.setOnClickListener {
+            ViewModelProviders.of(this@DestinationDetail).get(FlightViewModel::class.java)
+        detaildestination.setOnClickListener {
             if (PrefUtils.isNetworkAvailable(this)) {
-                destonationSuggestion()
+                searchDestinationDetails()
             } else {
                 showErrorMessage(getString(R.string.internet_check))
             }
@@ -42,20 +45,20 @@ class DestinationRouteActivity : AppCompatActivity() {
     /**
      * Get the Flight details based on the flight number and Date
      */
-    private fun destonationSuggestion() {
+    private fun searchDestinationDetails() {
         var tokenValue = PrefUtils.getStringPreference(this, getString(R.string.token))
         tokenValue = "Bearer " + tokenValue
-        var cities = cities.text.toString()
-        if (!cities.isEmpty()) {
+        var origin = origin.text.toString()
+        if (!origin.isEmpty()) {
 
                 progress_bar.visibility = View.VISIBLE
-                mAndroidViewModel?.getDestinationData(
-                    progress_bar,cities.toUpperCase(),
+                mAndroidViewModel?.getDestinationDetailData(
+                    progress_bar,origin.toUpperCase(),
                     tokenValue.toString()
                 )
 
             } else {
-                    showErrorMessage(getString(R.string.error_cities))
+                    showErrorMessage(getString(R.string.error_origin))
             }
 
     }
@@ -78,7 +81,7 @@ class DestinationRouteActivity : AppCompatActivity() {
          * Observer for Flight status details.
          */
         private fun initObservers() {
-            mAndroidViewModel?.getDestinationData()?.observe(this, Observer {
+            mAndroidViewModel?.getDestinationDetatilData()?.observe(this, Observer {
                 it?.let {
                     progress_bar.visibility = View.GONE
                     sendData(it)
@@ -89,9 +92,9 @@ class DestinationRouteActivity : AppCompatActivity() {
         /**
          * Share the Flight data into Flight detail view
          */
-        private fun sendData(destinationBase: DestinationRouteBase) {
-            val intent = Intent(this, DestinationRouteList::class.java)
-            intent.putExtra(getString(R.string.destinationroutedata), destinationBase)
+        private fun sendData(destinationBase: DestinationDetatilBase) {
+            val intent = Intent(this, DestinationDetailView::class.java)
+            intent.putExtra(getString(R.string.destinationdetaildata), destinationBase)
             startActivity(intent)
         }
 
