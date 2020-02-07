@@ -63,4 +63,7 @@ dependencies {
     testImplementation 'android.arch.core:core-testing:1.1.1'
     // ROBOLECTRIC
     testImplementation 'org.robolectric:robolectric:3.8'
+
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+
 }

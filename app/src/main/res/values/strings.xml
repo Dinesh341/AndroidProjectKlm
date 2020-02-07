@@ -2,10 +2,19 @@
     <string name="app_name">KLM</string>
     <string name="error_date">Please select the date</string>
     <string name="error_flight">Please enter the valid flight number</string>
+    <string name="error_departing">Please enter the Departing</string>
+    <string name="error_arriving">Please enter the Arriving</string>
     <string name="under_dev">Under Development</string>
     <string name="flightdata">flightdata</string>
+    <string name="flightroutedata">flightroutedata</string>
     <string name="token">token</string>
     <string name="select_date">Select Date</string>
     <string name="status_flight">Status flight KL</string>
     <string name="internet_check">Please check the internet connection</string>
-</resources>
+    <string name="departing_from">Departing from, eg.AMS</string>
+    <string name="arriving_at">Arrving at, eg.CDG</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="search_route">Search Route</string>
+    <string name="flight_route_data">flightRouteData</string>
+   </resources>

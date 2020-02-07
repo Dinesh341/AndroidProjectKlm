@@ -1,11 +1,14 @@
 package com.my.klm.Utils
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.preference.PreferenceManager
 import android.text.TextUtils
 import android.util.Log
+import com.my.klm.R
+import kotlinx.android.synthetic.main.flightstatus_activity.*
 
 
 object PrefUtils {
@@ -57,4 +60,15 @@ object PrefUtils {
             .activeNetworkInfo.isConnected
     }
 
+    fun validateFlightNumber(flightNumber: String) : Boolean {
+        return flightNumber.length == 6
+    }
+
+    fun validateDateText(date: String):Boolean{
+        return date.equals("Select Date")
+    }
+
+    fun validateFromToDate(date: String):Boolean{
+        return date.equals("Start Date") || date.equals("End Date")
+    }
 }

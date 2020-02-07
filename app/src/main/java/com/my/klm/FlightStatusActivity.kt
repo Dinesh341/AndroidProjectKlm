@@ -1,11 +1,13 @@
 package com.my.klm
 
 import FlightStatusData
+import android.app.Application
 import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +19,8 @@ import java.util.*
 
 class FlightStatusActivity : AppCompatActivity() {
     private var mAndroidViewModel: FlightViewModel? = null
+    var cal = Calendar.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +35,20 @@ class FlightStatusActivity : AppCompatActivity() {
             }
         }
         initTokenObservers()
-        setUpCalender()
+
+        // when you click on the button, show DatePickerDialog that is set with OnDateSetListener
+        flightdate!!.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View) {
+                DatePickerDialog(this@FlightStatusActivity,
+                    dateSetListener,
+                    // set DatePickerDialog to point to today's date when it loads up
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)).show()
+            }
+
+        })
+
     }
 
     /**
@@ -40,8 +57,8 @@ class FlightStatusActivity : AppCompatActivity() {
     private fun searchFlightNumber() {
         var tokenValue = PrefUtils.getStringPreference(this, getString(R.string.token))
         tokenValue = "Bearer " + tokenValue
-        var date = selectDate.text.toString().trim()
-        if (flightno.text.length == 6 && !date.equals(getString(R.string.select_date))) {
+        var date = flightdate.text.toString().trim()
+        if (PrefUtils.validateFlightNumber(flightno.text.toString())&& !PrefUtils.validateDateText(date)) {
             progress_circular.visibility = View.VISIBLE
             mAndroidViewModel?.getFlightList(progress_circular,
                 "/travel/flightstatus/${flightno.text.toString().toUpperCase()}" + "+${date}",
@@ -50,9 +67,9 @@ class FlightStatusActivity : AppCompatActivity() {
                 tokenValue.toString()
             )
         } else {
-            if (!(flightno.text.length == 6)) {
+            if (PrefUtils.validateFlightNumber(flightno.text.toString())) {
                showErrorMessage(getString(R.string.error_flight))
-            } else if (date.equals(getString(R.string.select_date))) {
+            } else if (PrefUtils.validateDateText(date)) {
                 showErrorMessage(getString(R.string.error_date))
             }
         }
@@ -70,29 +87,25 @@ class FlightStatusActivity : AppCompatActivity() {
         toast.show()
     }
 
-    /**
-     * Set the Calender Instance
-     */
-    private fun setUpCalender() {
-        val cal = Calendar.getInstance()
-        val year = cal.get(Calendar.YEAR)
-        val month = cal.get(Calendar.MONTH)
-        val day = cal.get(Calendar.DAY_OF_MONTH)
-        selectDate.setOnClickListener {
-            val dpd = DatePickerDialog(
-                this,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    val myFormat = "yyyy-MM-dd" // mention the format you need
-                    val sdf = SimpleDateFormat(myFormat, Locale.US)
-                    selectDate!!.text = sdf.format(cal.getTime())
-                },
-                year,
-                month,
-                day
-            )
-            dpd.show()
+
+    // create an OnDateSetListener
+    val dateSetListener = object : DatePickerDialog.OnDateSetListener {
+        override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
+                               dayOfMonth: Int) {
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, monthOfYear)
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateDateInView()
         }
     }
+
+
+
+private fun updateDateInView() {
+    val myFormat = "yyyy-MM-dd" // mention the format you need
+    val sdf = SimpleDateFormat(myFormat, Locale.US)
+    flightdate!!.text = sdf.format(cal.getTime())
+}
 
     /**
      * Observer for Flight status details.

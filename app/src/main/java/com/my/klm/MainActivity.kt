@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.klm.ViewModels.FlightViewModel
 import com.my.klm.Utils.PrefUtils
+import com.my.klm.flightroute.FlightRouteActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -23,12 +24,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         flight_route.setOnClickListener {
-            val toast = Toast.makeText(
-                applicationContext,
-                getString(R.string.under_dev),
-                Toast.LENGTH_SHORT
-            )
-            toast.show()
+            intent = Intent(this, FlightRouteActivity::class.java)
+            startActivity(intent)
         }
         mAndroidViewModel =
             ViewModelProviders.of(this@MainActivity).get(FlightViewModel::class.java)
