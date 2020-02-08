@@ -1,25 +1,33 @@
-package com.klm.ViewModels
+package com.my.klm.viewmodels
 
-
-import com.my.klm.model.destinationdetail.DestinationDetatilBase
-import com.my.klm.model.destination.DestinationRouteBase
-import com.my.klm.model.FlightStatusData
-import com.my.klm.model.token.TokenData
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import com.klm.networkservice.RetrofitService
+import com.my.klm.KlmApplication
+import com.my.klm.R
+import com.my.klm.model.FlightStatusData
+import com.my.klm.model.destination.DestinationRouteBase
+import com.my.klm.model.destinationdetail.DestinationDetatilBase
+import com.my.klm.model.error.ErrorBase
 import com.my.klm.model.route.FlightRouteBase
+import com.my.klm.model.token.TokenData
+import com.my.klm.utils.PrefUtils.showErrorMessage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONObject
+import java.lang.Exception
 
+
+private const val tokenBody = "client_credentials"
 
 class FlightViewModel : ViewModel() {
-
-    private val TAG: String = FlightViewModel::class.java.getSimpleName()
+    private val classNameTag: String = FlightViewModel::class.java.simpleName
     private val compositeDisposable = CompositeDisposable()
     private var flightdata: MutableLiveData<FlightStatusData> = MutableLiveData()
     private var routeflightdata: MutableLiveData<FlightRouteBase> = MutableLiveData()
@@ -29,9 +37,10 @@ class FlightViewModel : ViewModel() {
     fun getFlightData(): MutableLiveData<FlightStatusData>? = flightdata
     fun getRouteFlightData(): MutableLiveData<FlightRouteBase>? = routeflightdata
     fun getDestinationData(): MutableLiveData<DestinationRouteBase>? = destinationData
-    fun getDestinationDetatilData(): MutableLiveData<DestinationDetatilBase>? = destinationDetailData
+    fun getDestinationDetatilData(): MutableLiveData<DestinationDetatilBase>? =
+        destinationDetailData
+
     fun getTokenValue(): MutableLiveData<TokenData>? = tokenData
-    val tokenBody: String = "client_credentials"
 
     fun getFlightList(
         progress_circular: ProgressBar,
@@ -47,10 +56,30 @@ class FlightViewModel : ViewModel() {
                 flightdata.value = result
             }, { error ->
                 progress_circular.visibility = View.GONE
-                Log.e(TAG,error.message)
+                displayError(error)
+                Log.e(classNameTag, error.message)
             }
             )
         compositeDisposable.add(disposable)
+    }
+
+    private fun displayError(error: Throwable) {
+        try {
+            if (error is HttpException) {
+                val response = error.response()
+                if (response.code() == 404) {
+                    val jObjError = JSONObject(response.errorBody()!!.string())
+                    val student = Gson().fromJson(jObjError.toString(), ErrorBase::class.java)
+                    showErrorMessage(KlmApplication.ctx, student.errors[0].name)
+                } else if (response.code() == 401) {
+                    val errorMessage = KlmApplication.ctx?.getString(R.string.not_authorized)
+                    showErrorMessage(KlmApplication.ctx, errorMessage.toString())
+                }
+            }
+        } catch (ex: Exception) {
+            Log.e(classNameTag, ex.message)
+        }
+
     }
 
     fun getDestinationData(
@@ -65,7 +94,8 @@ class FlightViewModel : ViewModel() {
                 destinationData.value = result
             }, { error ->
                 progress_circular.visibility = View.GONE
-                Log.e(TAG,error.message)
+                displayError(error)
+                Log.e(classNameTag, error.message)
             }
             )
         compositeDisposable.add(disposable)
@@ -83,7 +113,8 @@ class FlightViewModel : ViewModel() {
                 destinationDetailData.value = result
             }, { error ->
                 progress_circular.visibility = View.GONE
-                Log.e(TAG,error.message)
+                displayError(error)
+                Log.e(classNameTag, error.message)
             }
             )
         compositeDisposable.add(disposable)
@@ -97,28 +128,31 @@ class FlightViewModel : ViewModel() {
         endRange: String,
         token: String
     ) {
-        val disposable = RetrofitService.create().getAllRouteFlight(origin, destination, startRange, endRange,token)
+        val disposable = RetrofitService.create()
+            .getAllRouteFlight(origin, destination, startRange, endRange, token)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
                 routeflightdata.value = result
             }, { error ->
                 progress_circular.visibility = View.GONE
-                Log.e(TAG,error.message)
+                displayError(error)
+                Log.e(classNameTag, error.message)
             }
             )
         compositeDisposable.add(disposable)
     }
 
     fun getToken() {
-        val disposable = RetrofitService.create().getToken(tokenBody).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result ->
-                tokenData.value = result
-            }, { error ->
-                Log.e(TAG,error.message)
-            }
-            )
+        val disposable =
+            RetrofitService.create().getToken(tokenBody).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ result ->
+                    tokenData.value = result
+                }, { error ->
+                    Log.e(classNameTag, error.message)
+                }
+                )
         compositeDisposable.add(disposable)
     }
 

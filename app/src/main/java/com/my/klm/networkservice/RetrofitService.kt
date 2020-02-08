@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 class RetrofitService {
 
     companion object Factory {
-        var gson = GsonBuilder().setLenient().create()
+        private var gson = GsonBuilder().setLenient().create()
 
         fun create(): ApiInterface {
             val retrofit = Retrofit.Builder()

@@ -1,4 +1,4 @@
-package com.adapter
+package com.my.klm.adapter
 
 import com.my.klm.model.destination.DestinationRouteBase
 import android.util.Log

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adapter.FlightRouteListAdapter
+import com.my.klm.adapter.FlightRouteListAdapter
 import com.my.klm.FlightDetailView
 import com.my.klm.R
 import com.my.klm.model.route.FlightRouteBase
@@ -28,7 +28,7 @@ class FlightRouteList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.flightroutelist)
         setTitle(R.string.route_list)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val flightRouteData = intent.getParcelableExtra<FlightRouteBase>(getString(R.string.flightroutedata))
         flightRouteData.operationalFlights?.let { setAdapter(it) }
     }

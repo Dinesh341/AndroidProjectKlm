@@ -1,6 +1,5 @@
 package com.my.klm.model.token
 
-import com.google.gson.annotations.SerializedName
 
 
 data class TokenData(

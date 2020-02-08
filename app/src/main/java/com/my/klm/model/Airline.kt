@@ -1,3 +1,5 @@
+package com.my.klm.model
+
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 

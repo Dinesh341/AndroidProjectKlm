@@ -1,6 +1,5 @@
 package com.my.klm.model
 
-import Airline
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 

@@ -6,11 +6,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.klm.ViewModels.FlightViewModel
-import com.my.klm.Utils.PrefUtils
+import com.my.klm.utils.PrefUtils
 import com.my.klm.destinationdetails.DestinationDetail
 import com.my.klm.destinationroute.DestinationRouteActivity
 import com.my.klm.flightroute.FlightRouteActivity
+import com.my.klm.viewmodels.FlightViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 

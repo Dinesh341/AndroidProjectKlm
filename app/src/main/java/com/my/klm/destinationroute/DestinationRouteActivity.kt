@@ -8,12 +8,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-
-import com.klm.ViewModels.FlightViewModel
 import com.my.klm.R
-import com.my.klm.Utils.PrefUtils
+import com.my.klm.utils.PrefUtils
+import com.my.klm.viewmodels.FlightViewModel
 import kotlinx.android.synthetic.main.destinationroute.*
 import kotlinx.android.synthetic.main.flightroute.progress_bar
+import java.util.*
 
 
 class DestinationRouteActivity : AppCompatActivity() {
@@ -23,14 +23,14 @@ class DestinationRouteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.destinationroute)
         setTitle(R.string.destination_suggestions)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mAndroidViewModel =
             ViewModelProviders.of(this@DestinationRouteActivity).get(FlightViewModel::class.java)
         search_destination.setOnClickListener {
             if (PrefUtils.isNetworkAvailable(this)) {
                 destonationSuggestion()
             } else {
-                showErrorMessage(getString(R.string.internet_check))
+                PrefUtils.showErrorMessage(this,getString(R.string.internet_check))
             }
         }
         initObservers()
@@ -41,34 +41,24 @@ class DestinationRouteActivity : AppCompatActivity() {
      */
     private fun destonationSuggestion() {
         var tokenValue = PrefUtils.getStringPreference(this, getString(R.string.token))
-        tokenValue = "Bearer " + tokenValue
-        var cities = cities.text.toString()
-        if (!cities.isEmpty()) {
+        tokenValue = getString(R.string.bearer_token, tokenValue)
+        val cities = cities.text.toString()
+        if (cities.isNotEmpty()) {
 
                 progress_bar.visibility = View.VISIBLE
                 mAndroidViewModel?.getDestinationData(
-                    progress_bar,cities.toUpperCase(),
+                    progress_bar,cities.toUpperCase(Locale.getDefault()),
                     tokenValue.toString()
                 )
 
             } else {
-                    showErrorMessage(getString(R.string.error_cities))
+            PrefUtils.showErrorMessage(this,getString(R.string.error_cities))
             }
 
     }
 
 
-        /**
-         * Show the Error Message
-         */
-        private fun showErrorMessage(errorMessage: String) {
-            val toast = Toast.makeText(
-                applicationContext,
-                errorMessage,
-                Toast.LENGTH_SHORT
-            )
-            toast.show()
-        }
+
 
 
         /**

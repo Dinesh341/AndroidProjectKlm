@@ -1,10 +1,11 @@
-package com.my.klm.Utils
+package com.my.klm.utils
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.preference.PreferenceManager
 import android.text.TextUtils
+import android.widget.Toast
 
 
 object PrefUtils {
@@ -67,4 +68,18 @@ object PrefUtils {
     fun validateFromToDate(date: String):Boolean{
         return date == "Start Date" || date == "End Date"
     }
+
+
+    /**
+     * Show the Error Message
+     */
+    fun showErrorMessage(context: Context?,errorMessage: String) {
+        val toast = Toast.makeText(
+            context,
+            errorMessage,
+            Toast.LENGTH_SHORT
+        )
+        toast.show()
+    }
+
 }

@@ -8,12 +8,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-
-import com.klm.ViewModels.FlightViewModel
 import com.my.klm.R
-import com.my.klm.Utils.PrefUtils
+import com.my.klm.utils.PrefUtils
+import com.my.klm.viewmodels.FlightViewModel
 import kotlinx.android.synthetic.main.destinationdetatil.*
 import kotlinx.android.synthetic.main.flightroute.progress_bar
+import java.util.*
 
 
 class DestinationDetail : AppCompatActivity() {
@@ -23,14 +23,14 @@ class DestinationDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.destinationdetatil)
         setTitle(R.string.weather_information)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mAndroidViewModel =
             ViewModelProviders.of(this@DestinationDetail).get(FlightViewModel::class.java)
         detaildestination.setOnClickListener {
             if (PrefUtils.isNetworkAvailable(this)) {
                 searchDestinationDetails()
             } else {
-                showErrorMessage(getString(R.string.internet_check))
+                PrefUtils.showErrorMessage(this,getString(R.string.internet_check))
             }
         }
         initObservers()
@@ -41,58 +41,44 @@ class DestinationDetail : AppCompatActivity() {
      */
     private fun searchDestinationDetails() {
         var tokenValue = PrefUtils.getStringPreference(this, getString(R.string.token))
-        tokenValue = "Bearer " + tokenValue
-        var origin = origin.text.toString()
-        if (!origin.isEmpty()) {
-
-                progress_bar.visibility = View.VISIBLE
-                mAndroidViewModel?.getDestinationDetailData(
-                    progress_bar,origin.toUpperCase(),
-                    tokenValue.toString()
-                )
-
-            } else {
-                    showErrorMessage(getString(R.string.error_origin))
-            }
-
+        tokenValue = getString(R.string.bearer_token, tokenValue)
+        val origin = origin.text.toString()
+        if (origin.isNotEmpty()) {
+            progress_bar.visibility = View.VISIBLE
+            mAndroidViewModel?.getDestinationDetailData(
+                progress_bar, origin.toUpperCase(Locale.getDefault()),
+                tokenValue.toString()
+            )
+        } else {
+            PrefUtils.showErrorMessage(this,getString(R.string.error_origin))
+        }
     }
 
 
-        /**
-         * Show the Error Message
-         */
-        private fun showErrorMessage(errorMessage: String) {
-            val toast = Toast.makeText(
-                applicationContext,
-                errorMessage,
-                Toast.LENGTH_SHORT
-            )
-            toast.show()
-        }
 
 
-        /**
-         * Observer for Flight status details.
-         */
-        private fun initObservers() {
-            mAndroidViewModel?.getDestinationDetatilData()?.observe(this, Observer {
-                    progress_bar.visibility = View.GONE
-                    sendData(it)
-            })
-        }
+    /**
+     * Observer for Flight status details.
+     */
+    private fun initObservers() {
+        mAndroidViewModel?.getDestinationDetatilData()?.observe(this, Observer {
+            progress_bar.visibility = View.GONE
+            sendData(it)
+        })
+    }
 
-        /**
-         * Share the Flight data into Flight detail view
-         */
-        private fun sendData(destinationBase: DestinationDetatilBase) {
-            val intent = Intent(this, DestinationDetailView::class.java)
-            intent.putExtra(getString(R.string.destinationdetaildata), destinationBase)
-            startActivity(intent)
-        }
+    /**
+     * Share the Flight data into Flight detail view
+     */
+    private fun sendData(destinationBase: DestinationDetatilBase) {
+        val intent = Intent(this, DestinationDetailView::class.java)
+        intent.putExtra(getString(R.string.destinationdetaildata), destinationBase)
+        startActivity(intent)
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
-    }
+}

@@ -13,7 +13,7 @@
     <string name="destinationdetaildata">destinationdetaildata</string>
     <string name="token">token</string>
     <string name="select_date">Select Date</string>
-    <string name="status_flight">Status flight KL</string>
+    <string name="status_flight">Status flight KL%1$d</string>
     <string name="internet_check">Please check the internet connection</string>
     <string name="departing_from">Departing from, eg.AMS</string>
     <string name="arriving_at">Arrving at, eg.CDG</string>
@@ -29,7 +29,12 @@
     <string name="search_destination">Search Destination</string>
     <string name="destination_detail">Destination Details</string>
     <string name="destination_hint">AMS</string>
-    <string name="degree_symbol">"\u00B0"</string>
+    <string name="degree_symbol">%1$s\u00B0 %2$s</string>
     <string name="route_list">Route List</string>
     <string name="flight_detail">Flight Details</string>
+    <string name="arrival_time">%1$s &#45; %2$s</string>
+    <string name="from_to">%1$s &#45; %2$s</string>
+    <string name="flight_number">KL%1$d</string>
+    <string name="bearer_token">Bearer %1$s</string>
+    <string name="not_authorized">Not Authorized</string>
 </resources>

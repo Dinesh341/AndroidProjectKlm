@@ -8,10 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.klm.ViewModels.FlightViewModel
 import com.my.klm.R
-import com.my.klm.Utils.PrefUtils
+import com.my.klm.utils.PrefUtils
 import com.my.klm.model.route.FlightRouteBase
+import com.my.klm.viewmodels.FlightViewModel
 import kotlinx.android.synthetic.main.flightroute.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,20 +19,20 @@ import java.util.*
 class FlightRouteActivity : AppCompatActivity() {
     private var mAndroidViewModel: FlightViewModel? = null
     private var isStartDate: Boolean = false
-    var cal = Calendar.getInstance()
+    private var cal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.flightroute)
         setTitle(R.string.flight_route)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mAndroidViewModel =
             ViewModelProviders.of(this@FlightRouteActivity).get(FlightViewModel::class.java)
         searchroute.setOnClickListener {
             if (PrefUtils.isNetworkAvailable(this)) {
                 searchFlightNumber()
             } else {
-                showErrorMessage(getString(R.string.internet_check))
+                PrefUtils.showErrorMessage(this,getString(R.string.internet_check))
             }
         }
         initTokenObservers()
@@ -51,32 +51,32 @@ class FlightRouteActivity : AppCompatActivity() {
      */
     private fun searchFlightNumber() {
         var tokenValue = PrefUtils.getStringPreference(this, getString(R.string.token))
-        tokenValue = "Bearer " + tokenValue
+        tokenValue = getString(R.string.bearer_token, tokenValue)
         val departingFrom = departing_from.text.toString()
         val arrivingAt = arriving_at.text.toString()
-        if (!departingFrom.isEmpty() && !arrivingAt.isEmpty()) {
+        if (departingFrom.isNotEmpty() && arrivingAt.isNotEmpty()) {
             if(!PrefUtils.validateFromToDate(start_date.text.toString()) && !PrefUtils.validateFromToDate(end_date.text.toString())) {
                 val startDate = "${start_date.text}T10:00:00Z"
                 val endDate = "${end_date.text}T19:00:00Z"
                 progress_bar.visibility = View.VISIBLE
                 mAndroidViewModel?.getAllRouteFlightList(
                     progress_bar,
-                    departingFrom.toUpperCase(),
-                    arrivingAt.toUpperCase(),
+                    departingFrom.toUpperCase(Locale.getDefault()),
+                    arrivingAt.toUpperCase(Locale.getDefault()),
                     startDate,
                     endDate,
                     tokenValue.toString()
                 )
-            }else {
-                showErrorMessage(getString(R.string.error_date))
+            } else {
+                PrefUtils.showErrorMessage(this,getString(R.string.error_date))
             }
-           } else {
-               if (departingFrom.isEmpty()) {
-                   showErrorMessage(getString(R.string.error_departing))
-               }else if(arrivingAt.isEmpty()){
-                   showErrorMessage(getString(R.string.error_arriving))
-               }
-           }
+        } else {
+            if (departingFrom.isEmpty()) {
+                PrefUtils.showErrorMessage(this,getString(R.string.error_departing))
+            } else if (arrivingAt.isEmpty()) {
+                PrefUtils.showErrorMessage(this,getString(R.string.error_arriving))
+            }
+        }
     }
 
     private fun datePicker() {
@@ -103,25 +103,12 @@ class FlightRouteActivity : AppCompatActivity() {
     private fun updateDateInView() {
         val myFormat = "yyyy-MM-dd" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        if(isStartDate) {
+        if (isStartDate) {
             start_date!!.text = sdf.format(cal.time)
-        }else{
+        } else {
             end_date!!.text = sdf.format(cal.time)
         }
     }
-
-    /**
-     * Show the Error Message
-     */
-    private fun showErrorMessage(errorMessage: String) {
-        val toast = Toast.makeText(
-            applicationContext,
-            errorMessage,
-            Toast.LENGTH_SHORT
-        )
-        toast.show()
-    }
-
 
     /**
      * Observer for Flight status details.

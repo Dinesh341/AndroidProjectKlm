@@ -12,27 +12,41 @@ class FlightDetailView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.flightstatus)
         setTitle(R.string.flight_detail)
-        supportActionBar.let {
-
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val flightData = intent.getParcelableExtra<FlightStatusData>(getString(R.string.flightdata))
-        val flightRouteData = intent.getParcelableExtra<OperationalFlights>(getString(R.string.flight_route_data))
+        val flightRouteData =
+            intent.getParcelableExtra<OperationalFlights>(getString(R.string.flight_route_data))
         flightRouteData?.let {
-            arrival_date_value.setText(flightRouteData.flightScheduleDate)
-            flightno.setText(getString(R.string.status_flight)+flightRouteData.flightNumber)
-            arrival_time_value.setText(flightRouteData.flightLegs?.get(0)?.departureInformation?.times?.scheduled+" - "+
-                    flightRouteData.flightLegs?.get(0)?.arrivalInformation?.times?.scheduled)
-            flighttime.setText(flightRouteData.flightStatusPublic)
-            operated.setText(flightRouteData.flightLegs?.get(0)?.aircraft?.typeName)
-            from_to.setText(flightRouteData.flightLegs?.get(0)?.departureInformation?.airport?.city?.name+" - "+ flightRouteData.flightLegs?.get(0)?.arrivalInformation?.airport?.city?.name)
+            arrival_date_value.text = flightRouteData.flightScheduleDate
+            flightno.text = getString(R.string.status_flight, flightRouteData.flightNumber)
+            getString(R.string.status_flight, flightRouteData.flightNumber)
+            arrival_time_value.text = getString(
+                R.string.arrival_time,
+                flightRouteData.flightLegs?.get(0)?.departureInformation?.times?.scheduled,
+                flightRouteData.flightLegs?.get(0)?.arrivalInformation?.times?.scheduled
+            )
+            flighttime.text = flightRouteData.flightStatusPublic
+            operated.text = flightRouteData.flightLegs?.get(0)?.aircraft?.typeName
+            from_to.text = getString(
+                R.string.from_to,
+                flightRouteData.flightLegs?.get(0)?.departureInformation?.airport?.city?.name,
+                flightRouteData.flightLegs?.get(0)?.arrivalInformation?.airport?.city?.name
+            )
         }
         flightData?.let {
-            arrival_date_value.setText(flightData.flightScheduleDate)
-            flightno.setText(getString(R.string.status_flight)+flightData.flightNumber)
-            arrival_time_value.setText(flightData.flightLegs?.get(0)?.departureInformation?.times?.scheduled+" - "+
-                    flightData.flightLegs?.get(0)?.arrivalInformation?.times?.scheduled)
-            operated.setText(flightData.flightLegs?.get(0)?.aircraft?.typeName)
-            from_to.setText(flightData.flightLegs?.get(0)?.departureInformation?.airport?.city?.name+" - "+ flightData.flightLegs?.get(0)?.arrivalInformation?.airport?.city?.name)
+            arrival_date_value.text = flightData.flightScheduleDate
+            flightno.text = getString(R.string.status_flight, flightData.flightNumber)
+            arrival_time_value.text = getString(
+                R.string.arrival_time,
+                flightData.flightLegs?.get(0)?.departureInformation?.times?.scheduled,
+                flightData.flightLegs?.get(0)?.arrivalInformation?.times?.scheduled
+            )
+            operated.text = flightData.flightLegs?.get(0)?.aircraft?.typeName
+            from_to.text = getString(
+                R.string.from_to,
+                flightData.flightLegs?.get(0)?.departureInformation?.airport?.city?.name,
+                flightData.flightLegs?.get(0)?.arrivalInformation?.airport?.city?.name
+            )
         }
 
     }

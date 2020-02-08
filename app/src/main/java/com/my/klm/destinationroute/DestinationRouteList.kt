@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adapter.DestinationRouteListAdapter
+import com.my.klm.adapter.DestinationRouteListAdapter
 import com.my.klm.R
 import kotlinx.android.synthetic.main.flightroutelist.*
 
@@ -16,7 +16,7 @@ class DestinationRouteList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.destinationroutelist)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setTitle(R.string.destination_suggestions)
         val flightRouteData =
             intent.getParcelableExtra<DestinationRouteBase>(getString(R.string.destinationroutedata))

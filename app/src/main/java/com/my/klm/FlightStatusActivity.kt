@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.klm.ViewModels.FlightViewModel
-import com.my.klm.Utils.PrefUtils
+import com.my.klm.utils.PrefUtils
+import com.my.klm.viewmodels.FlightViewModel
 import kotlinx.android.synthetic.main.flightstatus_activity.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,7 +20,6 @@ class FlightStatusActivity : AppCompatActivity() {
     private var mAndroidViewModel: FlightViewModel? = null
     private var cal = Calendar.getInstance()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.flightstatus_activity)
@@ -29,22 +28,24 @@ class FlightStatusActivity : AppCompatActivity() {
         mAndroidViewModel =
             ViewModelProviders.of(this@FlightStatusActivity).get(FlightViewModel::class.java)
         searchflight.setOnClickListener {
-            if(PrefUtils.isNetworkAvailable(this)) {
+            if (PrefUtils.isNetworkAvailable(this)) {
                 searchFlightNumber()
-            }else{
-                showErrorMessage(getString(R.string.internet_check))
+            } else {
+                PrefUtils.showErrorMessage(this,getString(R.string.internet_check))
             }
         }
-        initTokenObservers()
+        initObservers()
 
         // when you click on the button, show DatePickerDialog that is set with OnDateSetListener
         flightdate!!.setOnClickListener {
-            DatePickerDialog(this@FlightStatusActivity,
+            DatePickerDialog(
+                this@FlightStatusActivity,
                 dateSetListener,
                 // set DatePickerDialog to point to today's date when it loads up
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)).show()
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
     }
 
@@ -52,40 +53,33 @@ class FlightStatusActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
+
     /**
      * Get the Flight details based on the flight number and Date
      */
     private fun searchFlightNumber() {
         var tokenValue = PrefUtils.getStringPreference(this, getString(R.string.token))
-        tokenValue = "Bearer " + tokenValue
+        tokenValue = getString(R.string.bearer_token, tokenValue)
         val date = flightdate.text.toString().trim()
-        if (PrefUtils.validateFlightNumber(flightno.text.toString())&& !PrefUtils.validateDateText(date)) {
+        if (PrefUtils.validateFlightNumber(flightno.text.toString()) && !PrefUtils.validateDateText(
+                date
+            )
+        ) {
             progress_circular.visibility = View.VISIBLE
-            mAndroidViewModel?.getFlightList(progress_circular,
-                "/travel/flightstatus/${flightno.text.toString().toUpperCase()}" + "+${date}",
+            mAndroidViewModel?.getFlightList(
+                progress_circular,
+                "/travel/flightstatus/${flightno.text.toString().toUpperCase(Locale.getDefault())}" + "+${date}",
                 "AMS",
                 "true",
                 tokenValue.toString()
             )
         } else {
             if (PrefUtils.validateFlightNumber(flightno.text.toString())) {
-               showErrorMessage(getString(R.string.error_flight))
+                PrefUtils.showErrorMessage(this,getString(R.string.error_flight))
             } else if (PrefUtils.validateDateText(date)) {
-                showErrorMessage(getString(R.string.error_date))
+                PrefUtils.showErrorMessage(this,getString(R.string.error_date))
             }
         }
-    }
-
-    /**
-     * Show the Error Message
-     */
-    private fun showErrorMessage(errorMessage : String) {
-        val toast = Toast.makeText(
-            applicationContext,
-            errorMessage,
-            Toast.LENGTH_SHORT
-        )
-        toast.show()
     }
 
 
@@ -99,20 +93,19 @@ class FlightStatusActivity : AppCompatActivity() {
         }
 
 
-
-private fun updateDateInView() {
-    val myFormat = "yyyy-MM-dd" // mention the format you need
-    val sdf = SimpleDateFormat(myFormat, Locale.US)
-    flightdate!!.text = sdf.format(cal.time)
-}
+    private fun updateDateInView() {
+        val myFormat = "yyyy-MM-dd" // mention the format you need
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        flightdate!!.text = sdf.format(cal.time)
+    }
 
     /**
      * Observer for Flight status details.
      */
-    private fun initTokenObservers() {
+    private fun initObservers() {
         mAndroidViewModel?.getFlightData()?.observe(this, Observer {
-                progress_circular.visibility = View.GONE
-                sendData(it)
+            progress_circular.visibility = View.GONE
+            sendData(it)
         })
     }
 

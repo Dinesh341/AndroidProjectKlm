@@ -1,11 +1,6 @@
 package com.my.klm.model
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
-import com.my.klm.model.Aircraft
-import com.my.klm.model.ArrivalInformation
-import com.my.klm.model.DepartureInformation
-import com.my.klm.model.Irregularity
 import kotlinx.android.parcel.Parcelize
 
 
